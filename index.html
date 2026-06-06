@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Cup Predictor 2026</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Friends & Family Competition</p>
+      <h1>World Cup Predictor 2026</h1>
+      <p class="lede">Make your picks for the group stage, knockout rounds, goals, players and bonus questions.</p>
+      <div class="hero-card"><strong>Deadline:</strong> update this in <code>index.html</code> before sharing.</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <form id="predictionForm" class="card">
+      <section class="step active" data-step="0">
+        <h2>Your details</h2>
+        <label>Name <input required name="name" autocomplete="name" /></label>
+        <label>Email <input required type="email" name="email" autocomplete="email" /></label>
+      </section>
+
+      <section class="step" data-step="1">
+        <h2>1. Group stage match results</h2>
+        <p>Pick the result of every group match.</p>
+        <div id="matchPredictions"></div>
+      </section>
+
+      <section class="step" data-step="2">
+        <h2>2. Group score predictions</h2>
+        <p>For each group, predict the two total numbers below.</p>
+        <div id="groupScores"></div>
+      </section>
+
+      <section class="step" data-step="3">
+        <h2>3. Knockout stage picks</h2>
+        <p>Select your predicted teams for each stage.</p>
+        <div id="knockoutPicks"></div>
+      </section>
+
+      <section class="step" data-step="4">
+        <h2>4. Goals: teams</h2>
+        <p>Pick exactly 5 teams in each category.</p>
+        <div class="grid two">
+          <div><h3>Most goals scored</h3><div id="topScoringTeams"></div></div>
+          <div><h3>Most goals conceded</h3><div id="topConcedingTeams"></div></div>
+        </div>
+      </section>
+
+      <section class="step" data-step="5">
+        <h2>5. Goalscorers</h2>
+        <p>Choose 8 players who you think will score goals.</p>
+        <div id="playerPicks"></div>
+      </section>
+
+      <section class="step" data-step="6">
+        <h2>6. Bonus questions</h2>
+        <div id="bonusQuestions"></div>
+      </section>
+
+      <section class="step" data-step="7">
+        <h2>Review & submit</h2>
+        <p>Check your entry before submitting. You can go back and edit anything.</p>
+        <pre id="reviewBox"></pre>
+        <button type="submit" class="primary">Submit predictions</button>
+        <p id="status" class="status"></p>
+      </section>
+
+      <nav class="formNav">
+        <button type="button" id="prevBtn">Back</button>
+        <span id="progressText"></span>
+        <button type="button" id="nextBtn" class="primary">Next</button>
+      </nav>
+    </form>
+  </main>
+
+  <footer class="wrap footer">Unofficial prediction game. Not affiliated with FIFA.</footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
