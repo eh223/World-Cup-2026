@@ -7,6 +7,8 @@ console.log('World Cup predictor app loaded - no email version v3');
 
 const el = id => document.getElementById(id);
 const safe = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function showMessage(msg){ const status = el('status'); if(status) status.textContent = msg; else alert(msg); }
+function clearMessage(){ const status = el('status'); if(status) status.textContent = ''; }
 
 function radioName(prefix, id){ return `${prefix}_${id}`; }
 function getGroupMatches(group){ return MATCHES.filter(m => m.group === group); }
@@ -132,12 +134,13 @@ function renderBonus(){
 }
 
 function showStep(n){
+  clearMessage();
   currentStep = Math.max(0, Math.min(n, steps.length-1));
   steps.forEach((s,i)=>s.classList.toggle('active', i===currentStep));
   el('prevBtn').style.visibility = currentStep ? 'visible' : 'hidden';
   el('nextBtn').style.display = currentStep === steps.length-1 ? 'none' : 'inline-block';
   el('progressText').textContent = `Step ${currentStep+1} of ${steps.length}`;
-  scrollTo({top:0, behavior:'smooth'});
+  try { window.scrollTo({top:0, behavior:'smooth'}); } catch(e) { window.scrollTo(0,0); }
 }
 
 function validateScores(){
@@ -158,7 +161,7 @@ function validateScores(){
 
 function validateRound32ByGroup(){
   for (const [group, teams] of Object.entries(GROUPS)) {
-    const selected = teams.filter(t => form.querySelector(`input[name="round32"][value="${CSS.escape(t)}"]`)?.checked).length;
+    const selected = teams.filter(t => [...form.querySelectorAll('input[name="round32"]')].some(cb => cb.value === t && cb.checked)).length;
     if (selected < 2 || selected > 3) { alert(`Please choose either 2 or 3 teams from Group ${group} for the Round of 32.`); return false; }
   }
   if (getChecked('round32').length !== 32) { alert('Please choose exactly 32 teams for the Round of 32.'); return false; }
@@ -170,7 +173,7 @@ function validateCurrent(){
   if(currentStep === 0) {
     const nameField = form.elements['name'];
     if(!nameField || !nameField.value.trim()) {
-      alert('Please enter your name.');
+      showMessage('Please enter your name.');
       nameField?.focus();
       return false;
     }
@@ -210,8 +213,18 @@ function collectData(){
   return out;
 }
 
-el('prevBtn').onclick = () => showStep(currentStep-1);
-el('nextBtn').onclick = () => { if(validateCurrent()) showStep(currentStep+1); };
+const prevButton = el('prevBtn');
+const nextButton = el('nextBtn');
+if (prevButton) prevButton.addEventListener('click', () => showStep(currentStep-1));
+if (nextButton) nextButton.addEventListener('click', () => {
+  console.log('Next clicked on step', currentStep);
+  try {
+    if(validateCurrent()) showStep(currentStep+1);
+  } catch (err) {
+    console.error(err);
+    showMessage('There is a page error. Please tell Ed: ' + (err && err.message ? err.message : err));
+  }
+});
 form.addEventListener('change', e => {
   if(e.target.closest('#knockoutPicks')) updateKnockoutFlow();
   if(e.target.closest('#playerPicks')) updatePlayerCounters();
