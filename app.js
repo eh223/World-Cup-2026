@@ -1,8 +1,9 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec; 
+const SCRIPT_URL = ''; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
+console.log('World Cup predictor app loaded - no email version v3');
 
 const el = id => document.getElementById(id);
 const safe = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -165,8 +166,21 @@ function validateRound32ByGroup(){
 }
 
 function validateCurrent(){
+  // Step 0: only require a name. This deliberately does not check for email.
+  if(currentStep === 0) {
+    const nameField = form.elements['name'];
+    if(!nameField || !nameField.value.trim()) {
+      alert('Please enter your name.');
+      nameField?.focus();
+      return false;
+    }
+    return true;
+  }
+
   const required = [...steps[currentStep].querySelectorAll('[required]')];
-  for (const field of required) { if(!field.checkValidity()) { field.reportValidity(); return false; } }
+  for (const field of required) {
+    if(!field.value || !field.checkValidity()) { field.reportValidity(); return false; }
+  }
   if(currentStep === 2 && !validateScores()) return false;
   if(currentStep === 3) {
     if(!validateRound32ByGroup()) return false;
