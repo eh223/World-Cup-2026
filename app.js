@@ -17,10 +17,42 @@ function renderMatches(){
 function renderGroupScores(){
   el('groupScores').innerHTML = Object.entries(GROUPS).map(([g,teams]) => `<div class="mini-card"><h3>Group ${g}</h3><p>${teams.map(safe).join(' · ')}</p><div class="grid two"><label>Total goals in group <input required type="number" min="0" name="group_${g}_goals"></label><label>Total draws in group <input required type="number" min="0" max="6" name="group_${g}_draws"></label></div></div>`).join('');
 }
-function teamSelect(name){ return `<select required name="${name}"><option value="">Choose team</option>${ALL_TEAMS.map(t=>`<option>${safe(t)}</option>`).join('')}</select>`; }
+function knockoutStageHtml(key, title, count, teams, helper){
+  return `<div class="mini-card knockout-stage" data-stage="${key}"><h3>${title}</h3><p class="muted">${helper}</p><p class="counter" id="${key}_counter">0 / ${count} selected</p><div class="checkbox-grid">${teams.map(t=>`<label class="pill"><input type="checkbox" name="${key}" value="${safe(t)}">${safe(t)}</label>`).join('')}</div></div>`;
+}
+function getChecked(name){ return [...form.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value); }
 function renderKnockout(){
-  const stages = [['round32',32,'Round of 32'],['last16',16,'Last 16'],['quarters',8,'Quarter finalists'],['semis',4,'Semi finalists'],['finalists',2,'Finalists'],['winner',1,'Winner']];
-  el('knockoutPicks').innerHTML = stages.map(([key,count,title]) => `<div class="mini-card"><h3>${title}</h3><div class="grid two">${Array.from({length:count},(_,i)=>`<label>${title} ${i+1}${teamSelect(`${key}_${i+1}`)}</label>`).join('')}</div></div>`).join('');
+  el('knockoutPicks').innerHTML = `
+    ${knockoutStageHtml('round32','Round of 32',32,ALL_TEAMS,'Tick the 32 teams you think will reach the first knockout round.')}
+    <div id="last16Wrap"></div>
+    <div id="quartersWrap"></div>
+    <div id="semisWrap"></div>
+    <div id="finalistsWrap"></div>
+    <div id="winnerWrap"></div>`;
+  updateKnockoutFlow();
+}
+function renderNextKnockoutStage(sourceName, targetWrapId, targetName, title, count, helper){
+  const teams = getChecked(sourceName);
+  const wrap = el(targetWrapId);
+  const existing = new Set(getChecked(targetName));
+  wrap.innerHTML = teams.length ? knockoutStageHtml(targetName,title,count,teams,helper) : '';
+  // Preserve any still-valid selections when a previous stage is edited.
+  [...form.querySelectorAll(`input[name="${targetName}"]`)].forEach(cb => { cb.checked = existing.has(cb.value); });
+}
+function updateKnockoutFlow(){
+  updateKnockoutCounters();
+  renderNextKnockoutStage('round32','last16Wrap','last16','Last 16',16,'From your Round of 32 picks, tick the 16 teams you think will progress.');
+  renderNextKnockoutStage('last16','quartersWrap','quarters','Quarter-finalists',8,'From your Last 16 picks, tick the 8 teams you think will progress.');
+  renderNextKnockoutStage('quarters','semisWrap','semis','Semi-finalists',4,'From your quarter-finalists, tick the 4 teams you think will progress.');
+  renderNextKnockoutStage('semis','finalistsWrap','finalists','Finalists',2,'From your semi-finalists, tick the 2 teams you think will reach the final.');
+  renderNextKnockoutStage('finalists','winnerWrap','winner','Winner',1,'From your finalists, tick the team you think will win the World Cup.');
+  updateKnockoutCounters();
+}
+function updateKnockoutCounters(){
+  [['round32',32],['last16',16],['quarters',8],['semis',4],['finalists',2],['winner',1]].forEach(([name,count])=>{
+    const counter = el(`${name}_counter`);
+    if(counter) counter.textContent = `${getChecked(name).length} / ${count} selected`;
+  });
 }
 function renderTeamCheckboxes(target,name){
   el(target).innerHTML = ALL_TEAMS.map(t=>`<label class="pill"><input type="checkbox" name="${name}" value="${safe(t)}">${safe(t)}</label>`).join('');
@@ -43,6 +75,13 @@ function showStep(n){
 function validateCurrent(){
   const required = [...steps[currentStep].querySelectorAll('[required]')];
   for (const field of required) { if(!field.checkValidity()) { field.reportValidity(); return false; } }
+  if(currentStep === 3) {
+    const requiredStages = [['round32',32],['last16',16],['quarters',8],['semis',4],['finalists',2],['winner',1]];
+    for (const [name,count] of requiredStages) {
+      const checked = form.querySelectorAll(`input[name="${name}"]:checked`).length;
+      if(checked !== count) { alert(`Please choose exactly ${count} teams for ${name}.`); return false; }
+    }
+  }
   if(currentStep === 4) {
     for (const name of ['most_goals_for','most_goals_against']) {
       const checked = form.querySelectorAll(`input[name="${name}"]:checked`).length;
@@ -59,6 +98,9 @@ function collectData(){
 function updateReview(){ el('reviewBox').textContent = JSON.stringify(collectData(), null, 2); }
 el('prevBtn').onclick = () => showStep(currentStep-1);
 el('nextBtn').onclick = () => { if(validateCurrent()) showStep(currentStep+1); };
+form.addEventListener('change', e => {
+  if(e.target.closest('#knockoutPicks')) updateKnockoutFlow();
+});
 form.addEventListener('submit', async e => {
   e.preventDefault();
   const status = el('status'); status.textContent = '';
