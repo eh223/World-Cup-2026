@@ -1,32 +1,51 @@
 # World Cup Predictor 2026
 
-Static GitHub Pages site for a private World Cup prediction game.
+Static GitHub Pages site for a World Cup prediction game.
 
-## Files
-- `index.html` — page structure
-- `styles.css` — design
-- `data.js` — teams, players and bonus questions
-- `app.js` — form generation, review, validation and submit
-- `Code.gs` — optional Google Apps Script receiver for Google Sheets
+## Update the site on GitHub
 
-## Publish on GitHub Pages
-1. Log in to GitHub.
-2. Create a new public repository, e.g. `world-cup-predictor`.
-3. Upload these files to the repository root.
-4. Go to **Settings → Pages**.
-5. Under **Build and deployment**, choose **Deploy from a branch**.
-6. Branch: `main`; folder: `/root`; click **Save**.
-7. After a minute or two, GitHub will show the site URL.
+1. Unzip this folder.
+2. Open your GitHub repository.
+3. Click **Add file → Upload files**.
+4. Drag all the unzipped files in.
+5. Commit the changes.
+6. Wait for **Actions → pages-build-deployment** to get a green tick.
+7. Hard refresh the public page, or add `?v=3` to the end of the URL.
 
-## Connect Google Sheets
-1. Create a Google Sheet and rename the first sheet `Entries`.
-2. Open **Extensions → Apps Script**.
-3. Paste in `Code.gs`.
-4. Deploy → New deployment → Web app.
-5. Execute as: **Me**. Who has access: **Anyone**.
-6. Copy the Web App URL.
-7. Paste it into `app.js` as `SCRIPT_URL`.
-8. Commit/push the updated `app.js` to GitHub.
+## Edit teams, players and bonus questions
 
-## Customise
-Edit `data.js` to update players and bonus questions. Edit the deadline text in `index.html`.
+Open `data.js`.
+
+- `GROUPS` controls teams and groups.
+- `PLAYER_TIERS` controls the four player lists. Replace the placeholder names with your real players.
+- `BONUS_QUESTIONS` controls the 10 bonus questions.
+
+## Set up Google Sheets to receive entries
+
+1. Create a new Google Sheet.
+2. Rename the first tab to `Responses`.
+3. In the Google Sheet, go to **Extensions → Apps Script**.
+4. Delete any starter code.
+5. Paste in the contents of `Code.gs` from this ZIP.
+6. Click **Save**.
+7. Click **Deploy → New deployment**.
+8. Click the cog/settings icon and choose **Web app**.
+9. Set:
+   - **Execute as:** Me
+   - **Who has access:** Anyone
+10. Click **Deploy**.
+11. Authorise the app when Google asks.
+12. Copy the Web App URL. It should end with `/exec`.
+13. Open `app.js` and paste that URL into this line:
+
+```js
+const SCRIPT_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
+```
+
+14. Upload the changed `app.js` to GitHub and commit it.
+
+## Test submission
+
+Open the public site, submit a test entry, then check the `Responses` tab in your Google Sheet.
+
+If you edit `Code.gs` later, use **Deploy → Manage deployments → Edit → New version → Deploy**. If you do not create a new version, Google may keep using the old script.

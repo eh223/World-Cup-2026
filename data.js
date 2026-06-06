@@ -1,5 +1,5 @@
 // 2026 FIFA World Cup predictor data.
-// Groups/fixtures based on the Wikipedia 2026 FIFA World Cup page checked 6 June 2026.
+// Replace teams, players and questions here if needed.
 const GROUPS = {
   A: ['Mexico','South Africa','South Korea','Czech Republic'],
   B: ['Canada','Bosnia and Herzegovina','Qatar','Switzerland'],
@@ -15,10 +15,12 @@ const GROUPS = {
   L: ['England','Croatia','Ghana','Panama']
 };
 
-const PLAYER_CHOICES = [
-  'Kylian Mbappé','Harry Kane','Lionel Messi','Cristiano Ronaldo','Erling Haaland','Vinícius Júnior','Jude Bellingham','Jamal Musiala',
-  'Lamine Yamal','Raphinha','Lautaro Martínez','Álvaro Morata','Mohamed Salah','Robert Lewandowski','Other player - add in bonus notes'
-];
+const PLAYER_TIERS = {
+  elite: ['Elite Player 1','Elite Player 2','Elite Player 3','Elite Player 4','Elite Player 5','Elite Player 6','Elite Player 7','Elite Player 8','Elite Player 9','Elite Player 10','Elite Player 11','Elite Player 12'],
+  tier1: ['Tier 1 Player 1','Tier 1 Player 2','Tier 1 Player 3','Tier 1 Player 4','Tier 1 Player 5','Tier 1 Player 6','Tier 1 Player 7','Tier 1 Player 8','Tier 1 Player 9','Tier 1 Player 10','Tier 1 Player 11','Tier 1 Player 12'],
+  tier2: ['Tier 2 Player 1','Tier 2 Player 2','Tier 2 Player 3','Tier 2 Player 4','Tier 2 Player 5','Tier 2 Player 6','Tier 2 Player 7','Tier 2 Player 8','Tier 2 Player 9','Tier 2 Player 10','Tier 2 Player 11','Tier 2 Player 12'],
+  tier3: ['Tier 3 Player 1','Tier 3 Player 2','Tier 3 Player 3','Tier 3 Player 4','Tier 3 Player 5','Tier 3 Player 6','Tier 3 Player 7','Tier 3 Player 8','Tier 3 Player 9','Tier 3 Player 10','Tier 3 Player 11','Tier 3 Player 12']
+};
 
 const BONUS_QUESTIONS = [
   'Who will win the tournament?',
