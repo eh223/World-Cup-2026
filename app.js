@@ -1,5 +1,5 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec';
+const SCRIPT_URL = ''; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
@@ -43,7 +43,7 @@ function renderScorePredictions(){
   el('groupScores').innerHTML = Object.entries(GROUPS).map(([group]) => `
     <div class="mini-card score-group" data-group="${group}">
       <h3>Group ${group}</h3>
-      <p class="muted">Enter scores for exactly two matches in this group.</p>
+      <p class="muted">Enter one exact score prediction in this group.</p>
       ${getGroupMatches(group).map(m => `
         <div class="score-row">
           <span>${safe(m.home)}</span>
@@ -154,7 +154,7 @@ function validateScores(){
       if (oneFilled && !bothFilled) { alert(`Please complete both scores for ${m.home} v ${m.away}, or leave both blank.`); return false; }
       if (bothFilled) complete++;
     }
-    if (complete !== 2) { alert(`Please enter exactly two score predictions for Group ${group}.`); return false; }
+    if (complete !== 1) { alert(`Please enter exactly one score prediction for Group ${group}.`); return false; }
   }
   return true;
 }
