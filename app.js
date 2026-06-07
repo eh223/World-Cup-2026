@@ -1,5 +1,5 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/insert/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
@@ -77,24 +77,24 @@ function groupedCheckboxHtml(name, teamsByGroup, checkedSet = new Set()){
 const THIRD_PLACE_WINNER_SLOTS = ['A','B','D','E','G','I','K','L'];
 const ROUND32_MATCHES = [
   {id:73, a:'2A', b:'2B'},
-  {id:74, a:'1C', b:'2F'},
-  {id:75, a:'1E', b:'3E'},
-  {id:76, a:'1F', b:'2C'},
-  {id:77, a:'2E', b:'2I'},
-  {id:78, a:'1I', b:'3I'},
+  {id:74, a:'1E', b:'3E'},
+  {id:75, a:'1F', b:'2C'},
+  {id:76, a:'1C', b:'2F'},
+  {id:77, a:'1I', b:'3I'},
+  {id:78, a:'2E', b:'2I'},
   {id:79, a:'1A', b:'3A'},
   {id:80, a:'1L', b:'3L'},
-  {id:81, a:'1G', b:'3G'},
-  {id:82, a:'1D', b:'3D'},
-  {id:83, a:'1H', b:'2J'},
-  {id:84, a:'2K', b:'2L'},
+  {id:81, a:'1D', b:'3D'},
+  {id:82, a:'1G', b:'3G'},
+  {id:83, a:'2K', b:'2L'},
+  {id:84, a:'1H', b:'2J'},
   {id:85, a:'1B', b:'3B'},
-  {id:86, a:'2D', b:'2G'},
-  {id:87, a:'1J', b:'2H'},
-  {id:88, a:'1K', b:'3K'}
+  {id:86, a:'1J', b:'2H'},
+  {id:87, a:'1K', b:'3K'},
+  {id:88, a:'2D', b:'2G'}
 ];
 const BRACKET_ROUNDS = [
-  {title:'Round of 16', matches:[{id:89, from:[73,75]}, {id:90, from:[74,77]}, {id:91, from:[76,78]}, {id:92, from:[79,80]}, {id:93, from:[83,84]}, {id:94, from:[81,82]}, {id:95, from:[86,88]}, {id:96, from:[85,87]}]},
+  {title:'Round of 16', matches:[{id:89, from:[74,77]}, {id:90, from:[73,75]}, {id:91, from:[76,78]}, {id:92, from:[79,80]}, {id:93, from:[83,84]}, {id:94, from:[81,82]}, {id:95, from:[86,88]}, {id:96, from:[85,87]}]},
   {title:'Quarter-finals', matches:[{id:97, from:[89,90]}, {id:98, from:[93,94]}, {id:99, from:[91,92]}, {id:100, from:[95,96]}]},
   {title:'Semi-finals', matches:[{id:101, from:[97,98]}, {id:102, from:[99,100]}]},
   {title:'Final', matches:[{id:104, from:[101,102]}]}
