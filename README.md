@@ -49,14 +49,3 @@ const SCRIPT_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
 Open the public site, submit a test entry, then check the `Responses` tab in your Google Sheet.
 
 If you edit `Code.gs` later, use **Deploy → Manage deployments → Edit → New version → Deploy**. If you do not create a new version, Google may keep using the old script.
-
-
-## Knockout bracket
-
-Stage 3 now works in three parts:
-
-1. Pick the 32 teams that qualify, choosing 2 or 3 from each group.
-2. Assign those selected teams as group winner, runner-up and, where relevant, third place.
-3. The site builds the knockout bracket from those positions, then asks entrants to pick one winner from each tie.
-
-The third-place slots are assigned automatically using the official eligible group slots in the 2026 knockout structure.
