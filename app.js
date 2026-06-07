@@ -1,5 +1,5 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = 'https://script.google.com/macros/s/insert/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
