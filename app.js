@@ -1,5 +1,5 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/insert/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
@@ -79,6 +79,8 @@ function knockoutStageHtml(key, title, count, teams, helper, grouped=false){
 }
 
 const ROUND32_MATCHES = [
+  // Official FIFA/Wikipedia match-number order for the 2026 Round of 32.
+  // Keeping these IDs correct is important because later rounds use Winner Match 73/74/etc.
   {id:73, a:{type:'rank', group:'A', rank:'runner'}, b:{type:'rank', group:'B', rank:'runner'}},
   {id:74, a:{type:'rank', group:'E', rank:'winner'}, b:{type:'third', groups:['A','B','C','D','F']}},
   {id:75, a:{type:'rank', group:'F', rank:'winner'}, b:{type:'rank', group:'C', rank:'runner'}},
