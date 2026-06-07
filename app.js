@@ -9,6 +9,14 @@ const el = id => document.getElementById(id);
 const safe = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function showMessage(msg){ const status = el('status'); if(status) status.textContent = msg; else alert(msg); }
 function clearMessage(){ const status = el('status'); if(status) status.textContent = ''; }
+function getRandomSweepstakeTeam(){ return ALL_TEAMS[Math.floor(Math.random() * ALL_TEAMS.length)]; }
+function showSweepstakeResult(team){
+  const box = el('sweepstakeResult');
+  if(!box) return;
+  const flag = (typeof TEAM_FLAGS !== 'undefined' && TEAM_FLAGS[team]) ? TEAM_FLAGS[team] : '🏳️';
+  box.hidden = false;
+  box.innerHTML = `<div class="flag">${flag}</div><div><span>Your random sweepstake team is</span><strong>${safe(team)}</strong><small>If they win the World Cup, you get a bonus 20 points.</small></div>`;
+}
 
 function radioName(prefix, id){ return `${prefix}_${id}`; }
 function getGroupMatches(group){ return MATCHES.filter(m => m.group === group); }
@@ -249,16 +257,20 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
   if(!validateCurrent()) return;
   const status = el('status'); status.textContent = '';
+  const sweepstakeTeam = getRandomSweepstakeTeam();
   const payload = collectData();
+  payload.sweepstakeTeam = sweepstakeTeam;
   if(!SCRIPT_URL){
-    status.textContent = 'Test mode: no Google Apps Script URL set yet. The form is working, but entries are not being saved yet.';
+    showSweepstakeResult(sweepstakeTeam);
+    status.textContent = 'Test mode: no Google Apps Script URL set yet. Your entry has not been saved, but the random sweepstake draw is working.';
     console.log('Prediction entry:', payload);
     return;
   }
   try{
     await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(payload)});
+    showSweepstakeResult(sweepstakeTeam);
     status.textContent = 'Submitted. Thanks and good luck!';
-    form.reset(); render(); showStep(0);
+    form.querySelector('.submitBtn').disabled = true;
   } catch(err){ status.textContent = 'Sorry, something went wrong. Please try again or contact the organiser.'; }
 });
 render();
