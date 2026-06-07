@@ -1,5 +1,5 @@
 // Paste your Google Apps Script Web App URL here when you are ready to collect entries.
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0V7sjAxkbTMPVJb6MTJGsKuOS8PsSeI4iG7HM4TBzdSg_h96TH1ehzhaI2sjXtqc/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
+const SCRIPT_URL = 'https://script.google.com/macros/s/insert/exec'; // e.g. https://script.google.com/macros/s/xxxxx/exec
 let currentStep = 0;
 const steps = [...document.querySelectorAll('.step')];
 const form = document.getElementById('predictionForm');
@@ -101,6 +101,7 @@ const BRACKET_ROUNDS = [
 ];
 let annexCMapPromise = null;
 let annexCMapCache = null;
+let bracketSelections = {}; // Stores knockout winners while the bracket is re-rendered.
 
 function slug(text){ return String(text).toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,''); }
 function rankingFieldName(group, team){ return `group_${group}_${slug(team)}`; }
@@ -247,9 +248,13 @@ function teamForSlot(slot, rankings, thirdMap){
 }
 function matchRadioHtml(matchId, a, b, roundName){
   if(!a || !b) return `<div class="match"><strong>Match ${matchId}</strong><p class="muted">Complete the earlier picks to generate this tie.</p></div>`;
-  return `<div class="match bracket-match"><strong>Match ${matchId}: ${safe(a)} v ${safe(b)}</strong><div class="options"><label class="pill"><input required type="radio" name="bracket_${matchId}" value="${safe(a)}">${safe(a)}</label><label class="pill"><input type="radio" name="bracket_${matchId}" value="${safe(b)}">${safe(b)}</label></div></div>`;
+  const picked = bracketSelections[matchId] || '';
+  const aChecked = picked === a ? 'checked' : '';
+  const bChecked = picked === b ? 'checked' : '';
+  return `<div class="match bracket-match"><strong>Match ${matchId}: ${safe(a)} v ${safe(b)}</strong><div class="options"><label class="pill"><input required type="radio" name="bracket_${matchId}" value="${safe(a)}" ${aChecked}>${safe(a)}</label><label class="pill"><input type="radio" name="bracket_${matchId}" value="${safe(b)}" ${bChecked}>${safe(b)}</label></div></div>`;
 }
 function winnerOf(matchId){
+  if(bracketSelections[matchId]) return bracketSelections[matchId];
   const field = form.querySelector(`input[name="bracket_${matchId}"]:checked`);
   return field ? field.value : '';
 }
@@ -439,7 +444,17 @@ if (nextButton) nextButton.addEventListener('click', () => {
   }
 });
 form.addEventListener('change', e => {
-  if(e.target.closest('#knockoutPicks')) updateKnockoutFlow();
+  if(e.target.closest('#knockoutPicks')) {
+    if(e.target.matches('input[type="radio"][name^="bracket_"]')) {
+      const matchId = e.target.name.replace('bracket_', '');
+      bracketSelections[matchId] = e.target.value;
+      updateKnockoutFlow();
+    } else if(e.target.matches('select[data-rank-team]')) {
+      // If the group order changes, old knockout winners may no longer be valid.
+      bracketSelections = {};
+      updateKnockoutFlow();
+    }
+  }
   if(e.target.closest('#playerPicks')) updatePlayerCounters();
 });
 form.addEventListener('submit', async e => {
