@@ -25,24 +25,29 @@
 
       <section class="step" data-step="1">
         <h2>1. Group stage match results</h2>
+        <p class="scoring-note"><strong>Scoring:</strong> 8 points for each correct result.</p>
         <p>Pick the result of every group match. The first team is selected by default.</p>
         <div id="matchPredictions"></div>
       </section>
 
       <section class="step" data-step="2">
         <h2>2. Score predictions</h2>
+        <p class="scoring-note"><strong>Scoring:</strong> 15 points for each correct score.</p>
         <p>For each group, enter one exact score prediction. Leave the other matches blank.</p>
         <div id="groupScores"></div>
       </section>
 
       <section class="step" data-step="3">
         <h2>3. Knockout stage picks</h2>
+        <p class="scoring-note"><strong>Scoring:</strong> 5 points per correct Round of 32 team, 10 for Last 16, 15 for quarter-finalists, 25 for semi-finalists, 40 for finalists, and 50 for the winner.</p>
         <p>For the Round of 32, choose either 2 or 3 teams from each group, and exactly 32 teams overall. Then narrow your picks down round by round.</p>
         <div id="knockoutPicks"></div>
       </section>
 
       <section class="step" data-step="4">
         <h2>4. Goals: teams</h2>
+        <p class="scoring-note"><strong>Goals scored scoring:</strong> 2 pts per group-stage goal, 4 Last 32, 5 Last 16, 6 quarter-finals, 8 semi-finals/third-place play-off, 10 final. Plus 1 point per goal for the overall top-scoring nation and a 5-point bonus for scoring 3+ in a game.</p>
+        <p class="scoring-note"><strong>Goals conceded scoring:</strong> 5 pts per group-stage goal conceded, 7 Last 32, 10 Last 16, 12 quarter-finals, 14 semi-finals/third-place play-off, 20 final. Plus 1 point per goal for the overall top-conceding nation and a 5-point bonus for conceding 3+ in a game.</p>
         <p>Pick exactly 5 teams in each category.</p>
         <div class="grid two">
           <div><h3>Most goals scored</h3><div id="topScoringTeams"></div></div>
@@ -52,12 +57,14 @@
 
       <section class="step" data-step="5">
         <h2>5. Goalscorers</h2>
+        <p class="scoring-note"><strong>Scoring:</strong> 10 pts per group-stage goal, 12 Last 32, 14 Last 16, 16 quarter-finals, 20 semi-finals/third-place play-off, 25 final. Plus a 25-point hat-trick bonus and 5 pts per goal for the Golden Boot winner.</p>
         <p>Choose 2 players from each tier.</p>
         <div id="playerPicks"></div>
       </section>
 
       <section class="step" data-step="6">
         <h2>6. Bonus questions</h2>
+        <p class="scoring-note"><strong>Scoring:</strong> 20 points per correct bonus question.</p>
         <div id="bonusQuestions"></div>
         <button type="submit" class="primary submitBtn">Submit predictions</button>
         <p id="status" class="status"></p>

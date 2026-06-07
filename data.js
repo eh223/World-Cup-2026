@@ -16,23 +16,107 @@ const GROUPS = {
 };
 
 const PLAYER_TIERS = {
-  elite: ['Elite Player 1','Elite Player 2','Elite Player 3','Elite Player 4','Elite Player 5','Elite Player 6','Elite Player 7','Elite Player 8','Elite Player 9','Elite Player 10','Elite Player 11','Elite Player 12'],
-  tier1: ['Tier 1 Player 1','Tier 1 Player 2','Tier 1 Player 3','Tier 1 Player 4','Tier 1 Player 5','Tier 1 Player 6','Tier 1 Player 7','Tier 1 Player 8','Tier 1 Player 9','Tier 1 Player 10','Tier 1 Player 11','Tier 1 Player 12'],
-  tier2: ['Tier 2 Player 1','Tier 2 Player 2','Tier 2 Player 3','Tier 2 Player 4','Tier 2 Player 5','Tier 2 Player 6','Tier 2 Player 7','Tier 2 Player 8','Tier 2 Player 9','Tier 2 Player 10','Tier 2 Player 11','Tier 2 Player 12'],
-  tier3: ['Tier 3 Player 1','Tier 3 Player 2','Tier 3 Player 3','Tier 3 Player 4','Tier 3 Player 5','Tier 3 Player 6','Tier 3 Player 7','Tier 3 Player 8','Tier 3 Player 9','Tier 3 Player 10','Tier 3 Player 11','Tier 3 Player 12']
+  elite: [
+    'Haaland (Norway)',
+    'Havertz (Germany)',
+    'Kane (England)',
+    'Mbappe (France)',
+    'Messi (Argentina)',
+    'Raphinha (Brazil)',
+    'Ronaldo (Portugal)',
+    'Yamal (Spain)'
+  ],
+  tier1: [
+    'Alvarez (Argentina)',
+    'De Ketelaere (Belgium)',
+    'Dembele (France)',
+    'Depay (Netherlands)',
+    'Doku (Belgium)',
+    'Fernandes (Portugal)',
+    'Gakpo (Netherlands)',
+    'Musiala (Germany)',
+    'Oyarzabal (Spain)',
+    'Vinicius Junior (Brazil)'
+  ],
+  tier2: [
+    'Arnautovic (Austria)',
+    'Balogun (USA)',
+    'Diaz (Columbia)',
+    'Embolo (Switzerland)',
+    'Gyokeres (Sweden)',
+    'Jimenez (Mexico)',
+    'Nunez (Uruguay)',
+    'Salah (Egypt)',
+    'Son Heung-min (South Korea)',
+    'Ueda (Japan)'
+  ],
+  tier3: [
+    'Ali (Qatar)',
+    'Amoura (Algeria)',
+    'Aubemeyang (Gabon)',
+    'Chris Wood (New Zealand)',
+    'David (Canada)',
+    'Hussein (Iraq)',
+    'McTominay (Scotland)',
+    'Miguelito (Bolivia)',
+    'Olwan (Jordan)',
+    'Valencia (Ecuador)'
+  ]
 };
 
 const BONUS_QUESTIONS = [
-  'Who will win the tournament?',
-  'Who will be runner-up?',
-  'Who will finish third?',
-  'Which team will be the biggest surprise?',
-  'Which team will be the biggest disappointment?',
-  'Who will be top goalscorer?',
-  'How many goals will be scored in the final?',
-  'Will there be a penalty shootout in the final?',
-  'Which team will receive the most cards?',
-  'Tie-breaker: total goals in the tournament?'
+  {
+    id: 'first_knocked_out',
+    label: 'First to get knocked out',
+    type: 'select',
+    options: ['Argentina','Brazil','England','France','Germany','Netherlands','Portugal','Spain']
+  },
+  {
+    id: 'minnow_furthest',
+    label: 'Minnow to get furthest',
+    type: 'select',
+    options: ['Cape Verde','Curacao','Haiti','Iraq','Jordan','Panama','Qatar','Uzbekistan']
+  },
+  {
+    id: 'red_card_team',
+    label: 'Name a team to get a red card',
+    type: 'select',
+    optionsFrom: 'teams'
+  },
+  {
+    id: 'england_penalty_miss',
+    label: 'England player to miss a penalty',
+    type: 'text',
+    placeholder: 'Enter player name'
+  },
+  {
+    id: 'golden_glove',
+    label: 'Golden Glove',
+    type: 'text',
+    placeholder: 'Enter goalkeeper name'
+  },
+  {
+    id: 'elite_striker_fewest_goals',
+    label: 'Elite striker with fewest goals',
+    type: 'select',
+    optionsFrom: 'elite'
+  },
+  {
+    id: 'average_goals_per_game',
+    label: 'Average goals per game',
+    type: 'number',
+    step: '0.01',
+    min: '0',
+    placeholder: 'e.g. 2.74'
+  },
+  {
+    id: 'trump_truthsocial_posts',
+    label: 'How many TruthSocial posts will Trump do during the World Cup disparaging the England football team?',
+    type: 'number',
+    step: '1',
+    min: '0',
+    placeholder: 'Enter a number'
+  }
 ];
 
 function buildGroupMatches() {

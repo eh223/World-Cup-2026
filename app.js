@@ -129,8 +129,24 @@ function updatePlayerCounters(){
   });
 }
 
+function bonusOptions(q){
+  if(q.optionsFrom === 'teams') return ALL_TEAMS;
+  if(q.optionsFrom === 'elite') return PLAYER_TIERS.elite;
+  return q.options || [];
+}
+
 function renderBonus(){
-  el('bonusQuestions').innerHTML = BONUS_QUESTIONS.map((q,i)=>`<label>${safe(q)}<textarea required name="bonus_${i+1}"></textarea></label>`).join('');
+  el('bonusQuestions').innerHTML = BONUS_QUESTIONS.map((q,i)=>{
+    const name = `bonus_${q.id || (i+1)}`;
+    if(q.type === 'select') {
+      const options = bonusOptions(q);
+      return `<label>${safe(q.label)}<select required name="${safe(name)}"><option value="">Choose...</option>${options.map(o=>`<option value="${safe(o)}">${safe(o)}</option>`).join('')}</select></label>`;
+    }
+    if(q.type === 'number') {
+      return `<label>${safe(q.label)}<input required type="number" name="${safe(name)}" min="${safe(q.min ?? '')}" step="${safe(q.step ?? '1')}" placeholder="${safe(q.placeholder || '')}"></label>`;
+    }
+    return `<label>${safe(q.label)}<input required type="text" name="${safe(name)}" placeholder="${safe(q.placeholder || '')}"></label>`;
+  }).join('');
 }
 
 function showStep(n){
