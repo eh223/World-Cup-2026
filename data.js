@@ -83,7 +83,7 @@ const TEAM_FLAGS = {
 const BONUS_QUESTIONS = [
   {
     id: 'first_knocked_out',
-    label: 'First to get knocked out',
+    label: 'First big team to get knocked out',
     type: 'select',
     options: ['Argentina','Brazil','England','France','Germany','Netherlands','Portugal','Spain']
   },
@@ -123,7 +123,7 @@ const BONUS_QUESTIONS = [
     type: 'number',
     step: '0.01',
     min: '0',
-    placeholder: 'e.g. 2.74'
+    placeholder: 'Two decimal places e.g. 1.84'
   },
   {
     id: 'trump_truthsocial_posts',
