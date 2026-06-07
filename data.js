@@ -53,14 +53,14 @@ const PLAYER_TIERS = {
   tier3: [
     'Ali (Qatar)',
     'Amoura (Algeria)',
-    'Aubemeyang (Gabon)',
-    'Chris Wood (New Zealand)',
     'David (Canada)',
+    'Diaz (Morocco)
     'Hussein (Iraq)',
     'McTominay (Scotland)',
-    'Miguelito (Bolivia)',
-    'Olwan (Jordan)',
+    'Semenyo (Ghana)'
     'Valencia (Ecuador)'
+    'Wood (New Zealand)',
+    'Yildiz (Turkey)',
   ]
 };
 
