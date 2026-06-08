@@ -54,11 +54,11 @@ const PLAYER_TIERS = {
     'Ali (Qatar)',
     'Amoura (Algeria)',
     'David (Canada)',
-    'Diaz (Morocco)
+    'Diaz (Morocco)',
     'Hussein (Iraq)',
     'McTominay (Scotland)',
-    'Semenyo (Ghana)'
-    'Valencia (Ecuador)'
+    'Semenyo (Ghana)',
+    'Valencia (Ecuador)',
     'Wood (New Zealand)',
     'Yildiz (Turkey)',
   ]
