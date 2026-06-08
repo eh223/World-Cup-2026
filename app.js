@@ -15,7 +15,7 @@ function showSweepstakeResult(team){
   if(!box) return;
   const flag = (typeof TEAM_FLAGS !== 'undefined' && TEAM_FLAGS[team]) ? TEAM_FLAGS[team] : '🏳️';
   box.hidden = false;
-  box.innerHTML = `<div class="flag">${flag}</div><div><span>Your random sweepstake team is</span><strong>${safe(team)}</strong><small>If they win the World Cup, you get a bonus 25 points.</small></div>`;
+  box.innerHTML = `<div class="flag">${flag}</div><div><span>Your random sweepstake team is</span><strong>${safe(team)}</strong><small>If they outperform median expectations of participants in the game, you get a bonus 25 points.</small></div>`;
 }
 
 function radioName(prefix, id){ return `${prefix}_${id}`; }
